@@ -123,11 +123,7 @@ function loadSliderImages() {
 
 const button_new = document.querySelector('#button_newsletter');
 
-
-
-
 button_new.addEventListener("click", handleClick);
-
 
 
 // handleClick = la fonction qui gère le click sur notre bouton !
@@ -141,6 +137,20 @@ function handleClick(event){
     //j'ai donc instauré un parametre event
     event.preventDefault();
 
-    //constante qui va permettre que la croix ferme la newsletter, j'ai donc récuperer la classe
-    const close = document.getElementById('.newsletter__close btn');
+}
+
+
+
+const closeAsideNews = document.querySelector('.newsletter__close');
+
+closeAsideNews.addEventListener("click", handleClick);
+
+function handleClick(event) {
+    event.preventDefault();
+    
+    const closeNews = document.querySelector('.newsletter');
+    closeNews.classList.toggle("newsletter--on");
+
+    
+    
 }
