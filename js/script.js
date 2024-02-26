@@ -154,3 +154,46 @@ function handleClick(event) {
     
     
 }
+
+const forbiddenDomains = [
+    '@yopmail.com',
+    '@yopmail.fr',
+    '@yopmail.net',
+    '@cool.fr.nf',
+    '@jetable.fr.nf',
+    '@courriel.fr.nf',
+    '@moncourrier.fr.nf',
+    '@monemail.fr.nf',
+    '@monmail.fr.nf',
+    '@hide.biz.st',
+    '@mymail.infos.st',
+];
+
+/*if(forbiddenDomains == false){
+    console.log("afficher l'email")
+}else{ 
+    console.log("ne pas afficher l'email")
+
+}*/
+
+//document.getElementsByTagName('form')[0].addEventListener('submit', function(evt) {
+   // evt.preventDefault(); // empêche le rechargement automatique de la page
+// le code peut s'exécuter maintenant...
+  //});
+  
+  const form = document.querySelector('#newsletter_form');
+
+  // on ajoute ensuite un écouteur d'évènement SUR CE FORMULAIRE
+
+  form.addEventListener("submit", handleSubmit);
+  
+  // notre fonction handler/de callback
+  function handleSubmit(event) {
+  event.preventDefault();
+  
+    console.log("formulaire envoyé !");
+    //permet d'afficher le contenu dans la console
+    const input = document.querySelector('.newsletter__field');
+    let value = input.value;
+    console.log(value);
+  }
