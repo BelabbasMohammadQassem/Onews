@@ -280,15 +280,15 @@ p {
   padding: 2rem;
   width: 25em;
   max-width: 100%;
-  /* display: none; */
+  display: none; 
 }
 
-/*
+
   .newsletter--on {
     display: block;
     animation: .3s 0s 1 pop;
   }
-*/
+
 
 .newsletter__title {
   font-weight: bold;
