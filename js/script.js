@@ -169,12 +169,7 @@ const forbiddenDomains = [
     '@mymail.infos.st',
 ];
 
-/*if(forbiddenDomains == false){
-    console.log("afficher l'email")
-}else{ 
-    console.log("ne pas afficher l'email")
 
-}*/
 
 //document.getElementsByTagName('form')[0].addEventListener('submit', function(evt) {
    // evt.preventDefault(); // empêche le rechargement automatique de la page
@@ -188,7 +183,7 @@ const forbiddenDomains = [
   form.addEventListener("submit", handleSubmit);
   
   // notre fonction handler/de callback
-  function handleSubmit(event) {
+  function handleSubmit(event, index) {
   event.preventDefault();
   
     console.log("formulaire envoyé !");
@@ -197,3 +192,32 @@ const forbiddenDomains = [
     let value = input.value;
     console.log(value);
   }
+    /*if(forbiddenDomains == false){
+    console.log("afficher l'email")
+}else{ 
+    console.log("ne pas afficher l'email")
+
+}*/
+
+
+
+
+
+
+
+
+for ( const forbiddenDomain of forbiddenDomains ) {
+    console.log(forbiddenDomain);
+    if(forbiddenDomain === value){
+        console.log("ca marche");
+    }else if (forbiddenDomain.includes(value)) {
+        console.log(forbiddenDomain);
+    }
+         else if 
+         (value ===""){
+        console.error("le champ ne peut pas être vide !"); }
+    else{
+            console.log ("inscription terminé");
+        }
+
+}
