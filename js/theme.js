@@ -8,7 +8,13 @@ let theme = {
 
         const button_lune = document.querySelector(".icon-moon");
         button_lune.addEventListener("click");
+
+        
   }
+  const lune: function(changeTheme){
+
+  }
+  
 }
 function changeTheme() {
     // En JS, quand on veut manipuler le DOM, ça se passe en 2 étapes !
