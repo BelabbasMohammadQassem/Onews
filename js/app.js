@@ -11,7 +11,8 @@ const app = {
         // ici, on initialise tous les autres modules (qui nécessitent de l'être) de notre application !
         destinations.init();
         newsletter.init();
-        // TODO : initialiser les autres modules ! (par exemple, le theme !)
+        theme.init();
+            // TODO : initialiser les autres modules ! (par exemple, le theme !)
     }
 }
 

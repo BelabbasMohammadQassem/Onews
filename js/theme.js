@@ -6,7 +6,8 @@ let theme = {
     init: function() {
         console.log("theme : init");
 
-        const button_lune = document.querySelectorAll("body");
+        const button_lune = document.querySelector(".icon-moon");
+        button_lune.addEventListener("click");
   }
 }
 function changeTheme() {
