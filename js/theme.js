@@ -3,8 +3,12 @@
  */
 
 let theme = {
-   
-  };
+    init: function() {
+        console.log("theme : init");
+
+        const button_lune = document.querySelectorAll("body");
+  }
+}
 function changeTheme() {
     // En JS, quand on veut manipuler le DOM, ça se passe en 2 étapes !
     // 1ère étape : on sélectionne / on récupère l'élément du DOM qu'on veut manipuler
