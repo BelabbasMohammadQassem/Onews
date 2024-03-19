@@ -2,18 +2,47 @@
 
 const app = {
 
+    // cette propriété contient un objet (tableau associatif) qui nous permet de stocker les réglages de l'utilisateur
+    //* les valeurs indiquées ici sont les valeurs par défaut, qui seront écrasées par le localStorage par la méthode loadFromLocalStorage
+    userPreferences: {
+        theme: "light",
+        color: "theme-green",
+        lang: "FR",
+        // ...
+        // TODO : ajouter d'autres préfèrences si nécessaire par la suite !
+    },
+
     /**
      * Initialisation de l'application
      */
     init: function() {
-        console.log("theme : init");
+        console.log("app : init");
+
+        // au démarrage de l'appli, on récupère les préférences utilisateur
+        app.loadFromLocalStorage();
 
         // ici, on initialise tous les autres modules (qui nécessitent de l'être) de notre application !
+        theme.init();
         destinations.init();
         newsletter.init();
-        theme.init();
         slider.init();
-            // TODO : initialiser les autres modules ! (par exemple, le theme !)
+        // TODO : initialiser les autres modules ! (par exemple, le theme !)
+    },
+
+    /**
+     * Cette méthode charge les préfèrences utilisateurs depuis le localStorage
+     */
+    loadFromLocalStorage: function() {
+        // on récupère les préfèrences depuis le localStorage
+        const json = localStorage.getItem("userPreferences");
+
+        if (json != null){
+            // si le json n'est pas null, c'est qu'il a des préférences utilisateur sauvegardées en localStorage
+            // donc on charge ces préfèrences :
+
+            // on converti (on "parse") notre JSON en objet JS !
+            app.userPreferences = JSON.parse(json);
+        }
     }
 }
 
