@@ -1,15 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Trip O'dvisor{% endblock %}
-
 {% block body %}
-<<main class="container">
-    <div class="content">
       <h1 class="content__title">Promenade dans la nature</h1>
 
       <section class="segment">
         <article class="card-solo">
-          <img class="card__image" src="img/nature.jpg" alt="">
+          <img class="card__image" src="{{ asset('img/nature.jpg') }}" alt="">
           <div class="card__tags">
             <span class="card__tag">Détente</span>
             <span class="card__tag">Famille</span>
@@ -125,27 +121,4 @@
         </article>
       </section>
 
-    </div>
-  </main>
 {% endblock %}
-
-<nav>
-      <div class="header__part">
-        <div class="container">
-          <div class="header__flex">
-            <a class="logo" href="">
-              <img class="logo__image" src="img/logo-theme-green.png" alt="">
-              <span class="logo__title">Trip O'dvisor</span>
-            </a>
-            <div class="menu">
-              <a class="menu__item" href=""><i class="icon-heart"></i> Favoris</a>
-              <a class="menu__item" id="newsletter-button" href=""><i class="icon-mail"></i> Newsletter</a>
-              <a class="menu__item" href=""><i class="icon-check-circle"></i> Avis</a>
-              <button id="theme-switch" class="btn" type="button" aria-label="Changer le thème"><i class="icon-moon"></i></button>
-              <div class="menu__color-switcher">
-                <button id="theme-green" class="theme-button" type="button" aria-label="Changer la couleur du thème"></button>
-                <button id="theme-red" class="theme-button" type="button" aria-label="Changer la couleur du thème"></button>
-                <button id="theme-blue" class="theme-button" title="changer la couleur du thème" type="button" aria-label="Changer la couleur du thème"></button>
-              </div>
-
-              

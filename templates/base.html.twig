@@ -1,16 +1,81 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Trip O'dvisor{% endblock %}</title>
+  <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/fonts.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+  <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}" type="image/x-icon">
+</head>
+<body class="">
+  <header class="header">
+    <nav>
+      <div class="header__part">
+        <div class="container">
+          <div class="header__flex">
+            <a class="logo" href="">
+              <img class="logo__image" src="{{ asset('img/logo-theme-green.png') }}" alt="">
+              <span class="logo__title">Trip O'dvisor</span>
+            </a>
+            <div class="menu">
+              <a class="menu__item" href=""><i class="icon-heart"></i> Favoris</a>
+              <a class="menu__item" id="newsletter-button" href=""><i class="icon-mail"></i> Newsletter</a>
+              <a class="menu__item" href=""><i class="icon-check-circle"></i> Avis</a>
+              <button id="theme-switch" class="btn" type="button" aria-label="Changer le thème"><i class="icon-moon"></i></button>
+              <div class="menu__color-switcher">
+                <button id="theme-green" class="theme-button" type="button" aria-label="Changer la couleur du thème"></button>
+                <button id="theme-red" class="theme-button" type="button" aria-label="Changer la couleur du thème"></button>
+                <button id="theme-blue" class="theme-button" title="changer la couleur du thème" type="button" aria-label="Changer la couleur du thème"></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="header__part">
+        <div class="container">
+          <div class="submenu">
+            <a class="submenu__item submenu__item--current" href="index.html">Voyages</a>
+            <a class="submenu__item" href="">Restaurants</a>
+            <a class="submenu__item" href="">Hôtels</a>
+            <a class="submenu__item" href="">Vols</a>
+            <a class="submenu__item" href="">Croisières</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+  <main class="container">
+    <div class="content">
+    {% block body %}{% endblock %}
+    </div>
+  </main>
+
+  <aside class="newsletter">
+    <button class="newsletter__close btn" aria-label="Fermer" type="button">&Cross;</button>
+    <h2 class="newsletter__title">Inscription à la newsletter</h2>
+    <form action="" method="post">
+      <input class="newsletter__field" type="email" required id="subscriber-email" placeholder="user@email.com" aria-label="Votre email">
+      <button class="btn" type="submit">Valider</button>
+    </form>
+  </aside>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Toute ressemblance avec d'autres contenus est purement fortuite.</p>
+    </div>
+  </footer>
+
+  <!-- juste avant la fermeture du body, on inclut notre script.js -->
+  <script src="{{ asset('js/app.js') }}"></script>
+  <script src="{{ asset('js/messages.js') }}"></script>
+  <script src="{{ asset('js/newsletter.js') }}"></script>
+  <script src="{{ asset('js/slider.js') }}"></script>
+  <script src="{{ asset('js/theme.js') }}"></script>
+  <script src="{{ asset('js/destinations.js') }}"></script>
+  <script src="{{ asset('js/reviews.js') }}"></script>
+  
+</body>
 </html>

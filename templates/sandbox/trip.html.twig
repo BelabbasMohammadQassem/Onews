@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SandboxController!{% endblock %}
+
+{% block body %}
+<h1>Liste des users</h1>
+
+<ul>
+    {% for currentTrip in allUserList %}
+        <li>
+            {{ currentTrip.tripImg}}
+            <ol>
+                {% for currentImg in currentTrip._img %}
+                <li>{{ currentImg.trip_img }}</li>
+                {% endfor %}
+            </ol>
+            <hr>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

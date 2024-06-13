@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SandboxController!{% endblock %}
+
+{% block body %}
+<h1>Liste des users</h1>
+
+<ul>
+    {% for currentUser in allUserList %}
+        <li>
+            {{ currentUser.userName }}
+            <ol>
+                {% for currentComment in currentUser.comments %}
+                <li>{{ currentComment.content }}</li>
+                {% endfor %}
+            </ol>
+            <hr>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}
