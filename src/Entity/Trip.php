@@ -16,50 +16,47 @@ class Trip
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $trip_img = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $img = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $trip_name = null;
+    private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 65)]
+    #[ORM\Column(length: 255)]
     private ?string $destination = null;
 
-    #[ORM\Column(type: Types::SMALLINT)]
-    private ?int $price = null;
+    #[ORM\Column]
+    private ?float $price = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $duration = null;
-
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $nextdeparture = null;
-
-    /**
-     * @var Collection<int, country>
-     */
-    #[ORM\ManyToMany(targetEntity: country::class, inversedBy: 'trips')]
-    private Collection $Country;
+    #[ORM\Column(nullable: true)]
+    private ?\DateTimeImmutable $nextDeparture = null;
 
     /**
      * @var Collection<int, Comment>
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'trip')]
-    private Collection $Comment;
+    private Collection $comments;
 
     /**
-     * @var Collection<int, tag>
+     * @var Collection<int, Tag>
      */
-    #[ORM\ManyToMany(targetEntity: tag::class, inversedBy: 'trips')]
-    private Collection $tag;
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: 'trips')]
+    private Collection $tags;
+
+    /**
+     * @var Collection<int, Country>
+     */
+    #[ORM\ManyToMany(targetEntity: Country::class, inversedBy: 'trips')]
+    private Collection $countries;
 
     public function __construct()
     {
-        $this->Country = new ArrayCollection();
-        $this->Comment = new ArrayCollection();
-        $this->tag = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->tags = new ArrayCollection();
+        $this->countries = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -67,26 +64,26 @@ class Trip
         return $this->id;
     }
 
-    public function getTripImg(): ?string
+    public function getImg(): ?string
     {
-        return $this->trip_img;
+        return $this->img;
     }
 
-    public function setTripImg(string $trip_img): static
+    public function setImg(?string $img): static
     {
-        $this->trip_img = $trip_img;
+        $this->img = $img;
 
         return $this;
     }
 
-    public function getTripName(): ?string
+    public function getName(): ?string
     {
-        return $this->trip_name;
+        return $this->name;
     }
 
-    public function setTripName(string $trip_name): static
+    public function setName(string $name): static
     {
-        $this->trip_name = $trip_name;
+        $this->name = $name;
 
         return $this;
     }
@@ -96,7 +93,7 @@ class Trip
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(?string $description): static
     {
         $this->description = $description;
 
@@ -115,62 +112,26 @@ class Trip
         return $this;
     }
 
-    public function getPrice(): ?int
+    public function getPrice(): ?float
     {
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(float $price): static
     {
         $this->price = $price;
 
         return $this;
     }
 
-    public function getDuration(): ?\DateTimeInterface
+    public function getNextDeparture(): ?\DateTimeImmutable
     {
-        return $this->duration;
+        return $this->nextDeparture;
     }
 
-    public function setDuration(\DateTimeInterface $duration): static
+    public function setNextDeparture(?\DateTimeImmutable $nextDeparture): static
     {
-        $this->duration = $duration;
-
-        return $this;
-    }
-
-    public function getNextdeparture(): ?\DateTimeInterface
-    {
-        return $this->nextdeparture;
-    }
-
-    public function setNextdeparture(\DateTimeInterface $nextdeparture): static
-    {
-        $this->nextdeparture = $nextdeparture;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, country>
-     */
-    public function getCountry(): Collection
-    {
-        return $this->Country;
-    }
-
-    public function addCountry(country $country): static
-    {
-        if (!$this->Country->contains($country)) {
-            $this->Country->add($country);
-        }
-
-        return $this;
-    }
-
-    public function removeCountry(country $country): static
-    {
-        $this->Country->removeElement($country);
+        $this->nextDeparture = $nextDeparture;
 
         return $this;
     }
@@ -178,15 +139,15 @@ class Trip
     /**
      * @return Collection<int, Comment>
      */
-    public function getComment(): Collection
+    public function getComments(): Collection
     {
-        return $this->Comment;
+        return $this->comments;
     }
 
     public function addComment(Comment $comment): static
     {
-        if (!$this->Comment->contains($comment)) {
-            $this->Comment->add($comment);
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
             $comment->setTrip($this);
         }
 
@@ -195,7 +156,7 @@ class Trip
 
     public function removeComment(Comment $comment): static
     {
-        if ($this->Comment->removeElement($comment)) {
+        if ($this->comments->removeElement($comment)) {
             // set the owning side to null (unless already changed)
             if ($comment->getTrip() === $this) {
                 $comment->setTrip(null);
@@ -206,25 +167,49 @@ class Trip
     }
 
     /**
-     * @return Collection<int, tag>
+     * @return Collection<int, Tag>
      */
-    public function getTag(): Collection
+    public function getTags(): Collection
     {
-        return $this->tag;
+        return $this->tags;
     }
 
-    public function addTag(tag $tag): static
+    public function addTag(Tag $tag): static
     {
-        if (!$this->tag->contains($tag)) {
-            $this->tag->add($tag);
+        if (!$this->tags->contains($tag)) {
+            $this->tags->add($tag);
         }
 
         return $this;
     }
 
-    public function removeTag(tag $tag): static
+    public function removeTag(Tag $tag): static
     {
-        $this->tag->removeElement($tag);
+        $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Country>
+     */
+    public function getCountries(): Collection
+    {
+        return $this->countries;
+    }
+
+    public function addCountry(Country $country): static
+    {
+        if (!$this->countries->contains($country)) {
+            $this->countries->add($country);
+        }
+
+        return $this;
+    }
+
+    public function removeCountry(Country $country): static
+    {
+        $this->countries->removeElement($country);
 
         return $this;
     }

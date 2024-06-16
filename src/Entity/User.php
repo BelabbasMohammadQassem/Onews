@@ -24,9 +24,6 @@ class User
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'user')]
     private Collection $comments;
 
-    #[ORM\Column(length: 255)]
-    private ?string $username = null;
-
     public function __construct()
     {
         $this->comments = new ArrayCollection();

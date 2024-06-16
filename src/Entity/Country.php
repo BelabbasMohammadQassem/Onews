@@ -16,12 +16,12 @@ class Country
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $country_name = null;
+    private ?string $name = null;
 
     /**
      * @var Collection<int, Trip>
      */
-    #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'Country')]
+    #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'countries')]
     private Collection $trips;
 
     public function __construct()
@@ -34,14 +34,14 @@ class Country
         return $this->id;
     }
 
-    public function getCountryName(): ?string
+    public function getName(): ?string
     {
-        return $this->country_name;
+        return $this->name;
     }
 
-    public function setCountryName(string $country_name): static
+    public function setName(string $name): static
     {
-        $this->country_name = $country_name;
+        $this->name = $name;
 
         return $this;
     }

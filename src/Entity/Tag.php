@@ -16,12 +16,12 @@ class Tag
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $tag_name = null;
+    private ?string $name = null;
 
     /**
      * @var Collection<int, Trip>
      */
-    #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'tag')]
+    #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'tags')]
     private Collection $trips;
 
     public function __construct()
@@ -34,14 +34,14 @@ class Tag
         return $this->id;
     }
 
-    public function getTagName(): ?string
+    public function getName(): ?string
     {
-        return $this->tag_name;
+        return $this->name;
     }
 
-    public function setTagName(string $tag_name): static
+    public function setName(string $name): static
     {
-        $this->tag_name = $tag_name;
+        $this->name = $name;
 
         return $this;
     }

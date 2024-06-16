@@ -21,18 +21,11 @@ class Comment
     private ?string $content = null;
 
     #[ORM\ManyToOne(inversedBy: 'comments')]
-    private ?comment $user = null;
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
-    #[ORM\Column(length: 255)]
-    private ?string $Trip = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $trip_name = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $description = null;
-
-    #[ORM\ManyToOne(inversedBy: 'Comment')]
+    #[ORM\ManyToOne(inversedBy: 'comments')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Trip $trip = null;
 
     public function getId(): ?int
@@ -64,12 +57,12 @@ class Comment
         return $this;
     }
 
-    public function getUser(): ?comment
+    public function getUser(): ?User
     {
         return $this->user;
     }
 
-    public function setUser(?comment $user): static
+    public function setUser(?User $user): static
     {
         $this->user = $user;
 
@@ -87,6 +80,4 @@ class Comment
 
         return $this;
     }
-
-  
 }

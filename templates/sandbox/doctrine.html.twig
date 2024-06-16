@@ -3,15 +3,15 @@
 {% block title %}Hello SandboxController!{% endblock %}
 
 {% block body %}
-<h1>Liste des users</h1>
+<h1>Liste des country</h1>
 
 <ul>
-    {% for currentUser in allUserList %}
+    {% for currentCountry in allCountryList %}
         <li>
-            {{ currentUser.userName }}
+            {{ currentCountry.name }}
             <ol>
-                {% for currentComment in currentUser.comments %}
-                <li>{{ currentComment.content }}</li>
+                {% for currentTrip in currentCountry.trips %}
+                <li>{{ currentTrip.name }}</li>
                 {% endfor %}
             </ol>
             <hr>
