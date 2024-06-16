@@ -84,4 +84,34 @@ class TripController extends AbstractController
             'addCommentForm' => $commentForm
         ]);
     }
+
+    #[Route('/{id}/edit', name: 'app_review_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(Comment::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_review_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('comment/edit.html.twig', [
+            'review' => $comment,
+            'form' => $form,
+        ]);
+    }
+
+
+    #[Route('/{id}', name: 'app_review_delete', methods: ['POST'])]
+    public function delete(Request $request, Comment $comment, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->getPayload()->get('_token'))) {
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+    }
 }

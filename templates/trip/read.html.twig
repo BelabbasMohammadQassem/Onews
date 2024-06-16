@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-      <h1 class="content__title">Promenade dans la nature</h1>
+      <h1 class="content__title">{{ trip.name }}</h1>
 
       <section class="segment">
         <article class="card-solo">
@@ -38,6 +38,7 @@
       </section>
 
       <section class="segment">
+        <a style="float:right" href="{{ path('app_trip_add_comment', {id: trip.id}) }}" class="btn">Commenter à mon tour</a>
         <h2 class="segment__title">Derniers commentaires</h2>
         <div class="filters">
           <span class="filter">

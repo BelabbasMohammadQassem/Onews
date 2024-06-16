@@ -20,7 +20,7 @@ class AppFixtures extends Fixture
         // $manager->persist($product);
         $countryObjectList = $this->loadCountries($manager);
         $tagObjectList = $this->loadTags($manager);
-        // $userObjectList = $this->loadUsers($manager);
+        $userObjectList = $this->loadUsers($manager);
 
         $trips = [
             [
@@ -86,24 +86,24 @@ class AppFixtures extends Fixture
                 $trip->addTag($tagToAdd);
             }
 
-            // // jointure comments
-            // $commentCount = random_int(1, 7);
-            // for ($i = $commentCount; $i > 0; $i--)
-            // {
-            //     $newComment = new Comment();
-            //     $newComment->setContent('commentaire ' . $i);
-            //     $newComment->setTrip($trip);
-            //     $newComment->setRating(random_int(1, 3));
+            // jointure comments
+            $commentCount = random_int(1, 7);
+            for ($i = $commentCount; $i > 0; $i--)
+            {
+                $newComment = new Comment();
+                $newComment->setContent('commentaire ' . $i);
+                $newComment->setTrip($trip);
+                $newComment->setRating(random_int(1, 3));
 
-            //     // on sélectionne un user au hasard pour l'associer au commentaire
-            //     $userToAddIndex = random_int(0, count($userObjectList) - 1);
-            //     $userToAdd = $userObjectList[$userToAddIndex];
-            //     $newComment->setUser($userToAdd);
+                // on sélectionne un user au hasard pour l'associer au commentaire
+                $userToAddIndex = random_int(0, count($userObjectList) - 1);
+                $userToAdd = $userObjectList[$userToAddIndex];
+                $newComment->setUser($userToAdd);
 
-            //     $manager->persist($newComment);
-            // }
+                $manager->persist($newComment);
+            }
 
-            // $manager->persist($trip);
+            $manager->persist($trip);
         }
 
         $manager->flush();
@@ -167,32 +167,49 @@ class AppFixtures extends Fixture
     }
 
 
-    // private function loadUsers(ObjectManager $manager)
-    // {
-    //     $users = [
-    //         'Manu',
-    //         'JP',
-    //         'Vivi',
-    //         'Kév',
-    //         'Mous',
-    //         'Nikko',
-    //         'Clém',
-    //         'Gwegz'
-    //     ];
+    private function loadUsers(ObjectManager $manager)
+    {
+        $users = [
+            'Manu',
+            'JP',
+            'Vivi',
+            'Kév',
+            'Mous',
+            'Nikko',
+            'Clém',
+            'Gwegz'
+        ];
 
-    //     $createdUsers = [];
-    //     foreach($users as $currentUser)
-    //     {
-    //         $newUser = new User();
-    //         $newUser->setUserName($currentUser);
+        $createdUsers = [];
+        foreach($users as $currentUser)
+        {
+            $newUser = new User();
+            $newUser->setUserName($currentUser);
+            $newUser->setEmail($currentUser . '@tripodvisor.fr');
+            $newUser->setRoles(['ROLE_USER']);
+            // mdp : tripodvisor
+            $newUser->setPassword('$2y$13$Os/WayK2hR5b6ZbtG42ek.yf.9VVLCM4nrvwadBuND3cNveaKzMVK');
 
 
-    //         $createdUsers[] = $newUser;
-    //         $manager->persist($newUser);
-    //     }
+            $createdUsers[] = $newUser;
+            $manager->persist($newUser);
+        }
 
-    //     $manager->flush();
 
-    //     return $createdUsers;
-    // }
+        $newUser = new User();
+        $newUser->setUserName('admin');
+
+        $newUser->setEmail('admin@tripodvisor.fr');
+        $newUser->setRoles(['ROLE_ADMIN']);
+        // mdp : tripodvisor
+        $newUser->setPassword('$2y$13$Os/WayK2hR5b6ZbtG42ek.yf.9VVLCM4nrvwadBuND3cNveaKzMVK');
+
+
+        $createdUsers[] = $newUser;
+        $manager->persist($newUser);
+
+        $manager->flush();
+
+        return $createdUsers;
+    }
 }
