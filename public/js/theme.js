@@ -100,7 +100,7 @@ const theme = {
 
         // changement du logo
         // 1ère étape : on reconstruit le nom du fichier à charger
-        const fileName = "img/logo-" + color + ".png";
+        const fileName = "/img/logo-" + color + ".png";
         console.log(fileName);
         // 2ème étape : on sélectionne la balise img
         const img = document.querySelector('.logo__image');

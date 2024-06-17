@@ -6,6 +6,8 @@ use App\Repository\CountryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 class Country
@@ -13,15 +15,26 @@ class Country
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups([
+        'sandbox_browse',
+    ])]
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups([
+        'sandbox_browse',
+    ])]
+    #[Assert\NotNull]
+    #[Assert\Length(min: 2)]
     private ?string $name = null;
 
     /**
      * @var Collection<int, Trip>
      */
     #[ORM\ManyToMany(targetEntity: Trip::class, mappedBy: 'countries')]
+    #[Groups([
+        'sandbox_browse',
+    ])]
     private Collection $trips;
 
     public function __construct()

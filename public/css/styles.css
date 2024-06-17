@@ -205,6 +205,16 @@ p {
   border-radius: 0.5em;
 }
 
+.card__rating {
+  position: relative;
+  bottom: -0.5em;
+  left: 1em;
+  background-color:var(--color-main);
+  color: white;
+  font-weight: bold;
+  padding: 0.5em;
+  border-radius: 0.5em;
+}
 /* slider */
 .slider {
   position: relative;

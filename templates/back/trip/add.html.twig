@@ -1,0 +1,16 @@
+{% extends 'base-back.html.twig' %}
+
+
+{% block body %}
+
+<h1>Ajouter un voyage</h1>
+
+<a href="{{ path('app_back_trip_browse') }}" class="btn btn-primary">Retour</a>
+
+{{ form_start(form, {"attr": {"novalidate": "novalidate"}})}}
+{{ form_row(form)}}
+<button class="btn btn-primary">Créer du rêve</button>
+{{ form_end(form)}}
+
+
+{% endblock %}

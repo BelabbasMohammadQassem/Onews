@@ -47,7 +47,7 @@ const slider = {
             img.classList.add('slider__img');
 
             // on remplit son attribut src
-            img.src = "img/" + image;
+            img.src = "/img/" + image;
 
             // 2. on ajoute notre baliser à l'élément sélectionné !
             //slider.append(img);

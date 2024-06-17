@@ -11,9 +11,17 @@ use DateTime;
 use DateTimeImmutable;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
+    private $hasher;
+
+    public function __construct(UserPasswordHasherInterface $hasher)
+    {
+        $this->hasher = $hasher;
+    }
+
     public function load(ObjectManager $manager): void
     {
         // $product = new Product();
@@ -137,7 +145,6 @@ class AppFixtures extends Fixture
         return $createdCountries;
     }
 
-
     private function loadTags(ObjectManager $manager)
     {
         $tags = [
@@ -166,7 +173,6 @@ class AppFixtures extends Fixture
         return $createdTags;
     }
 
-
     private function loadUsers(ObjectManager $manager)
     {
         $users = [
@@ -187,9 +193,10 @@ class AppFixtures extends Fixture
             $newUser->setUserName($currentUser);
             $newUser->setEmail($currentUser . '@tripodvisor.fr');
             $newUser->setRoles(['ROLE_USER']);
-            // mdp : tripodvisor
-            $newUser->setPassword('$2y$13$Os/WayK2hR5b6ZbtG42ek.yf.9VVLCM4nrvwadBuND3cNveaKzMVK');
 
+            $clearPassword = 'tripodvisor';
+            $hashedPassword = $this->hasher->hashPassword($newUser, $clearPassword);
+            $newUser->setPassword($hashedPassword);
 
             $createdUsers[] = $newUser;
             $manager->persist($newUser);
@@ -201,9 +208,10 @@ class AppFixtures extends Fixture
 
         $newUser->setEmail('admin@tripodvisor.fr');
         $newUser->setRoles(['ROLE_ADMIN']);
-        // mdp : tripodvisor
-        $newUser->setPassword('$2y$13$Os/WayK2hR5b6ZbtG42ek.yf.9VVLCM4nrvwadBuND3cNveaKzMVK');
-
+        
+        $clearPassword = 'admin';
+        $hashedPassword = $this->hasher->hashPassword($newUser, $clearPassword);
+        $newUser->setPassword($hashedPassword);
 
         $createdUsers[] = $newUser;
         $manager->persist($newUser);

@@ -1,0 +1,33 @@
+{% extends 'base-back.html.twig' %}
+
+
+{% block body %}
+
+<h1>Liste des Voyages</h1>
+
+<a href="{{ path('app_back_trip_add') }}" class="btn btn-primary">Ajouter</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Destination</th>
+            <th>Prix</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for currentTrip in tripList %}
+            <tr>
+                <td>{{ currentTrip.name }}</td>
+                <td>{{ currentTrip.destination }}</td>
+                <td>{{ currentTrip.price }}</td>
+                <td>
+                    <a href="{{path('app_back_trip_read', {id: currentTrip.id})}}" class="btn btn-secondary">Détails</a>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
+{% endblock %}

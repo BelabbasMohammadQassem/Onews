@@ -15,7 +15,7 @@
       <div class="header__part">
         <div class="container">
           <div class="header__flex">
-            <a class="logo" href="">
+            <a class="logo" href="{{ path('app_home') }}">
               <img class="logo__image" src="{{ asset('img/logo-theme-green.png') }}" alt="">
               <span class="logo__title">Trip O'dvisor</span>
             </a>
@@ -36,7 +36,7 @@
       <div class="header__part">
         <div class="container">
           <div class="submenu">
-            <a class="submenu__item submenu__item--current" href="index.html">Voyages</a>
+            <a class="submenu__item submenu__item--current" href="{{ path('app_trip_browse') }}">Voyages</a>
             <a class="submenu__item" href="">Restaurants</a>
             <a class="submenu__item" href="">Hôtels</a>
             <a class="submenu__item" href="">Vols</a>
