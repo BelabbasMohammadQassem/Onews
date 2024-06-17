@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TripController extends AbstractController
 {
@@ -113,5 +115,65 @@ class TripController extends AbstractController
         }
 
         return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('/sandbox/api', name: 'app_sandbox_api_browse', methods: ["GET"])]
+    public function apiBrowse(TripRepository $tripRepository): Response
+    {
+        $tripList= $tripRepository->findAll();
+
+        return $this->json(data: $tripList, context: ['groups' => 'sandbox_browse']);
+    }
+    
+
+    #[Route('/sandbox/api', name: 'app_sandbox_api_add', methods: ["POST"])]
+    public function apiAdd(
+        EntityManagerInterface $em,
+        Request $request, 
+        SerializerInterface $serializer,
+        ValidatorInterface $validator
+    ): Response
+    {
+        // $country = new Trip;
+        // récupérer les données
+            // récupérer le json de la requete HTTP
+            $json = $request->getContent();
+            // créer un objet à partir de ce json
+            $trip = $serializer->deserialize($json, Trip::class, 'json');
+
+            dump($trip);
+        // valider les données
+
+        $errors = $validator->validate($trip);
+        if (count($errors) > 0) {
+            /*
+             * Uses a __toString method on the $errors variable which is a
+             * ConstraintViolationList object. This gives us a nice string
+             * for debugging.
+             */
+            $errorsString = (string) $errors;
+    
+            return $this->json(data: $errorsString, status: 400);
+        }
+        // traiter les données
+        $em->persist($trip);
+        $em->flush();
+
+        return $this->json(data: $trip, context: ['groups' => 'sandbox_browse']);
+    }
+
+
+    #[Route('/sandbox/api/{id}', name: 'app_sandbox_api_read', methods: ["GET"], requirements: ["id" => "\d+"])]
+    public function apiRead($id, TripRepository $tripRepository): Response
+    {
+        $trip = $tripRepository->find($id);
+
+        if(is_null($trip))
+        {
+            return $this->json(data: ['success' => false, 'msg' => 'Country non trouvée'], status: Response::HTTP_NOT_FOUND);
+        }
+
+        return $this->json(data: $trip, context: ['groups' => 'sandbox_browse']);
     }
 }
